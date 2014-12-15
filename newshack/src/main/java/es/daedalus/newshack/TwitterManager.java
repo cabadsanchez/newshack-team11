@@ -2,10 +2,12 @@ package es.daedalus.newshack;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
 //import org.apache.http.client.ClientProtocolException;
+
 
 //import es.daedalus.textalytics.sempub.Result;
 //import es.daedalus.textalytics.sempub.SempubClient;
@@ -136,16 +138,22 @@ public class TwitterManager
     	
     	String id = "544302821450207233";
     	long tweetid = Long.valueOf(id);
+    	LanguageStats stats = new LanguageStats();
     			
     	List<User> users = twitterManager.getRetweetersIds(tweetid,numRTUsers);  
     	for (User user : users) {
-			System.out.println("Analyzing " + user.getScreenName());
+			String language = user.getLang().substring(0,2);
+			System.out.println(user.getScreenName() + " " + language);
+			stats.addLanguage(language);
+			
 			List<Status> statuses = twitterManager.getUserTimeline(user.getId(), numStatuses);
-			for (Status status : statuses) {
-				System.out.println(status.getText());
-			}
+//			for (Status status : statuses) {
+//				System.out.println(status.getText());
+//			}
 			System.out.println("--------------------------------------------");
 		}
-   
+
+    	
+    	stats.printLanguageStats();
     }       
 }
