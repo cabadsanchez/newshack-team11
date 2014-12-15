@@ -22,5 +22,11 @@
 		<version>[4.0,)</version>
 	</dependency>
   
+  	<dependency>
+		<groupId>es.daedalus.textalytics</groupId>
+		<artifactId>textalytics-sdk-java-sempub</artifactId>
+		<version>1.0</version>
+	</dependency>
+	
    </dependencies>
 </project>

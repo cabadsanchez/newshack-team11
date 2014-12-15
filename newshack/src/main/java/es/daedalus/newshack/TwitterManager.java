@@ -130,14 +130,20 @@ public class TwitterManager
 
 //    	Status first = statuses.get(0);
 
+    	int numRTUsers = 1;
+    	int numStatuses = 10;
+    	
+    	
     	String id = "544302821450207233";
     	long tweetid = Long.valueOf(id);
     			
-    	List<User> users = twitterManager.getRetweetersIds(tweetid,200);  
-    
-    	int i = 0;
+    	List<User> users = twitterManager.getRetweetersIds(tweetid,numRTUsers);  
     	for (User user : users) {
-			System.out.println(i++ + " " + user.getScreenName());
+			System.out.println("Analyzing " + user.getScreenName());
+			List<Status> statuses = twitterManager.getUserTimeline(user.getId(), numStatuses);
+			for (Status status : statuses) {
+				System.out.println(status.getText());
+			}
 			System.out.println("--------------------------------------------");
 		}
    
