@@ -132,6 +132,33 @@ public class TwitterManager
 		}
 	}
 	
+	/**
+	 * Method to store retweeters and retweets in JSON files
+	 * 
+	 * @param users
+	 * @param statuses
+	 */
+	public void serializeUsers(List<User> users, List<Status> statuses) {
+		int t = 0;
+		int u = 0;
+		for (User user : users) {
+			for (Status status : statuses) {				
+				try {
+					mapper.writeValue(new File("/home/bolloyo/software/newshack-team11/tweets/tweet" + t +"-user" + u + ".json"), status);
+					t++;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			t = 0;
+    		try {
+				mapper.writeValue(new File("/home/bolloyo/software/newshack-team11/users/user" + u +".json"), user);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			u++;
+		}
+	}
 	
 
     public static void main( String[] args ) throws TwitterException
@@ -156,9 +183,7 @@ public class TwitterManager
     	long tweetid = Long.valueOf(id);
     	LanguageStats stats = new LanguageStats();
     			
-    	List<User> users = twitterManager.getRetweetersIds(tweetid,numRTUsers); 
-//    	int u = 0;
-//    	int t = 0;
+    	List<User> users = twitterManager.getRetweetersIds(tweetid,numRTUsers);
     	for (User user : users) {
 			String language = user.getLang().substring(0,2);
 			System.out.println(user.getScreenName() + " " + language);
@@ -170,22 +195,7 @@ public class TwitterManager
 			for (Status status : statuses) {
 				System.out.println(status.getText());
 //				System.out.println(result);
-				
-//				try {
-//					mapper.writeValue(new File("/home/bolloyo/software/newshack-team11/tweets/tweet" + t +"-user" + u + ".json"), status);
-//					t++;
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
 			}
-//			t = 0;
-//    		try {
-//				mapper.writeValue(new File("/home/bolloyo/software/newshack-team11/users/user" + u +".json"), user);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//			
-//			u++;
 		}
 
     	
