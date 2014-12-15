@@ -21,6 +21,13 @@
 		<artifactId>twitter4j-core</artifactId>
 		<version>[4.0,)</version>
 	</dependency>
+	
+	<!-- Jackson -->
+	<dependency>
+		<groupId>org.codehaus.jackson</groupId>
+		<artifactId>jackson-jaxrs</artifactId>
+		<version>1.9.13</version>
+	</dependency>
   
   	<dependency>
 		<groupId>es.daedalus.textalytics</groupId>

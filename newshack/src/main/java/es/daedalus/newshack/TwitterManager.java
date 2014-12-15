@@ -1,12 +1,13 @@
 package es.daedalus.newshack;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-//import org.apache.http.client.ClientProtocolException;
+import org.codehaus.jackson.map.ObjectMapper;
 
+
+//import org.apache.http.client.ClientProtocolException;
 //import es.daedalus.textalytics.sempub.Result;
 //import es.daedalus.textalytics.sempub.SempubClient;
 //import es.daedalus.textalytics.sempub.TextalyticsClientException;
@@ -29,11 +30,13 @@ public class TwitterManager
 	
 	Twitter twitter;
 //	SempubClient textalytics;
+	static ObjectMapper mapper;
 
 	
 	public TwitterManager() {
     	this.twitter = TwitterFactory.getSingleton();
 //    	this.textalytics = new SempubClient();
+    	mapper = new ObjectMapper();
 	}
 
 	public List<Status> getUserTimeline(String screenname) 
@@ -130,21 +133,36 @@ public class TwitterManager
 
 //    	Status first = statuses.get(0);
 
-    	int numRTUsers = 1;
-    	int numStatuses = 10;
+    	int numRTUsers = 10;
+    	int numStatuses = 20;
     	
     	
     	String id = "544302821450207233";
     	long tweetid = Long.valueOf(id);
     			
-    	List<User> users = twitterManager.getRetweetersIds(tweetid,numRTUsers);  
+    	List<User> users = twitterManager.getRetweetersIds(tweetid,numRTUsers); 
+    	int u = 0;
+    	int t = 0;
     	for (User user : users) {
 			System.out.println("Analyzing " + user.getScreenName());
 			List<Status> statuses = twitterManager.getUserTimeline(user.getId(), numStatuses);
 			for (Status status : statuses) {
 				System.out.println(status.getText());
+				try {
+					mapper.writeValue(new File("/home/bolloyo/software/newshack-team11/tweets/tweet" + t +"-user" + u + ".json"), status);
+					t++;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
-			System.out.println("--------------------------------------------");
+			t = 0;
+    		try {
+				mapper.writeValue(new File("/home/bolloyo/software/newshack-team11/users/user" + u +".json"), user);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			u++;
 		}
    
     }       
