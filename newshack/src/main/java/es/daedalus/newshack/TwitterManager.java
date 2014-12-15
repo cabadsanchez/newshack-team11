@@ -152,8 +152,8 @@ public class TwitterManager
     	LanguageStats stats = new LanguageStats();
     			
     	List<User> users = twitterManager.getRetweetersIds(tweetid,numRTUsers); 
-    	int u = 0;
-    	int t = 0;
+//    	int u = 0;
+//    	int t = 0;
     	for (User user : users) {
 			String language = user.getLang().substring(0,2);
 			System.out.println(user.getScreenName() + " " + language);
@@ -162,21 +162,21 @@ public class TwitterManager
 			List<Status> statuses = twitterManager.getUserTimeline(user.getId(), numStatuses);
 			for (Status status : statuses) {
 				System.out.println(status.getText());
-				try {
-					mapper.writeValue(new File("/home/bolloyo/software/newshack-team11/tweets/tweet" + t +"-user" + u + ".json"), status);
-					t++;
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+//				try {
+//					mapper.writeValue(new File("/home/bolloyo/software/newshack-team11/tweets/tweet" + t +"-user" + u + ".json"), status);
+//					t++;
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
 			}
-			t = 0;
-    		try {
-				mapper.writeValue(new File("/home/bolloyo/software/newshack-team11/users/user" + u +".json"), user);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			u++;
+//			t = 0;
+//    		try {
+//				mapper.writeValue(new File("/home/bolloyo/software/newshack-team11/users/user" + u +".json"), user);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//			
+//			u++;
 		}
 
     	
