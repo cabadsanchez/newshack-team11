@@ -8,12 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
-
-
 import org.apache.http.client.ClientProtocolException;
+
 import es.daedalus.textalytics.sempub.Result;
 import es.daedalus.textalytics.sempub.SempubClient;
 import es.daedalus.textalytics.sempub.TextalyticsClientException;
+import es.daedalus.textalytics.sempub.domain.Category;
 import es.daedalus.textalytics.sempub.domain.Document.Language;
 import es.daedalus.textalytics.sempub.domain.Entity;
 import twitter4j.IDs;
@@ -114,6 +114,23 @@ public class TwitterManager
 		return result;
 	}
 	
+	public void countUserStatusList(LanguageStats stats, List<Status> statuses) {
+		for (Status status : statuses) {
+			Result annotations = this.analyzeUserStatus(status);
+			if (annotations != null) {
+				List<Category> categories = annotations.getCategories();
+				for (Category category : categories) {
+					stats.addTheme(category.getLabels().get(0));
+				}
+				
+				List<Entity> entities = annotations.getEntities();
+				for (Entity entity : entities) {
+					stats.addTopics(entity.getForm());;
+				}
+				
+			}
+		}
+	}
 	
 	
 
@@ -148,9 +165,10 @@ public class TwitterManager
 			stats.addLanguage(language);
 			
 			List<Status> statuses = twitterManager.getUserTimeline(user.getId(), numStatuses);
+			twitterManager.countUserStatusList(stats, statuses);
+
 			for (Status status : statuses) {
 				System.out.println(status.getText());
-				Result result = twitterManager.analyzeUserStatus(status);
 //				System.out.println(result);
 				
 //				try {
@@ -172,5 +190,12 @@ public class TwitterManager
 
     	
     	stats.printLanguageStats();
+    	System.out.println("-----------");
+    	stats.printThemeStats();
+    	System.out.println("-----------");    	
+    	stats.printTopicsStats();
+    	System.out.println("-----------");
+    	
+    			
     }       
 }

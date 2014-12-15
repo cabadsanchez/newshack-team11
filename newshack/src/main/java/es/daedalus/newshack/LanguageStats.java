@@ -21,6 +21,7 @@ public class LanguageStats {
 		super();
 		this.languages = new Hashtable<String, Integer>();
 		this.themes = new Hashtable<String, Integer>();
+		this.topics = new Hashtable<String, Integer>();		
 	}
 	
 	public void addLanguage(String name) {
