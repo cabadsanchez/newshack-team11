@@ -1,28 +1,21 @@
 package es.daedalus.newshack;
 
-<<<<<<< HEAD
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
-=======
 import java.io.File;
->>>>>>> 2ec4e10f8b50d1d5898ee343ac91fb0963175f8d
 import java.util.LinkedList;
 import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
 
-<<<<<<< HEAD
-
-=======
-//import org.apache.http.client.ClientProtocolException;
->>>>>>> 2ec4e10f8b50d1d5898ee343ac91fb0963175f8d
-//import es.daedalus.textalytics.sempub.Result;
-//import es.daedalus.textalytics.sempub.SempubClient;
-//import es.daedalus.textalytics.sempub.TextalyticsClientException;
-//import es.daedalus.textalytics.sempub.domain.Document.Language;
-//import es.daedalus.textalytics.sempub.domain.Entity;
+import org.apache.http.client.ClientProtocolException;
+import es.daedalus.textalytics.sempub.Result;
+import es.daedalus.textalytics.sempub.SempubClient;
+import es.daedalus.textalytics.sempub.TextalyticsClientException;
+import es.daedalus.textalytics.sempub.domain.Document.Language;
+import es.daedalus.textalytics.sempub.domain.Entity;
 import twitter4j.IDs;
 import twitter4j.Paging;
 import twitter4j.Status;
@@ -39,13 +32,13 @@ public class TwitterManager
 {
 	
 	Twitter twitter;
-//	SempubClient textalytics;
+	SempubClient textalytics;
 	static ObjectMapper mapper;
 
 	
 	public TwitterManager() {
     	this.twitter = TwitterFactory.getSingleton();
-//    	this.textalytics = new SempubClient();
+    	this.textalytics = new SempubClient();
     	mapper = new ObjectMapper();
 	}
 
@@ -97,34 +90,29 @@ public class TwitterManager
 
 		return users;
 	}
-//	
-//	public List<Entity> analyzeUserStatus(List<Status> statuses) {
-//		Status s = statuses.get(0);
-//		Result result = null;
-//		
-//		try {
-//			String language = s.getLang().substring(0, 2);
-//			if (language.equals("es") || language.equals("en"))
-//
-//			result = this.textalytics.analyze(s.getText(),Language.valueOf(language));
-//			
-//			
-//		} catch (TextalyticsClientException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (ClientProtocolException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} 
-//
-//		if (result != null)
-//			return result.getEntities();
-//		else 
-//			return new ArrayList<Entity>();
-//	}
+	
+	public Result analyzeUserStatus(Status status) {
+		Result result = null;
+		
+		try {
+			String language = status.getLang().substring(0, 2);
+			if (language.equals("es") || language.equals("en"))
+
+			result = this.textalytics.analyze(status.getText(),Language.valueOf(language));
+			
+		} catch (TextalyticsClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+
+		return result;
+	}
 	
 	
 	
@@ -162,6 +150,9 @@ public class TwitterManager
 			List<Status> statuses = twitterManager.getUserTimeline(user.getId(), numStatuses);
 			for (Status status : statuses) {
 				System.out.println(status.getText());
+				Result result = twitterManager.analyzeUserStatus(status);
+//				System.out.println(result);
+				
 //				try {
 //					mapper.writeValue(new File("/home/bolloyo/software/newshack-team11/tweets/tweet" + t +"-user" + u + ".json"), status);
 //					t++;
