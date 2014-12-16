@@ -15,13 +15,13 @@ public class LanguageStats {
 
 	Hashtable<String, Integer> languages;
 	Hashtable<String, Integer> themes;
-	Hashtable<String, Integer> topics;
+	Hashtable<String, Integer> entities;
 
 	public LanguageStats() {
 		super();
 		this.languages = new Hashtable<String, Integer>();
 		this.themes = new Hashtable<String, Integer>();
-		this.topics = new Hashtable<String, Integer>();		
+		this.entities = new Hashtable<String, Integer>();
 	}
 	
 	public void addLanguage(String name) {
@@ -38,11 +38,11 @@ public class LanguageStats {
 		this.themes.put(name, count + 1);
 	}
 
-	public void addTopics(String name) {
+	public void addEntity(String name) {
 		Integer count = 0;
-		if (this.topics.containsKey(name)) 
-			count = this.topics.get(name);
-		this.topics.put(name, count + 1);
+		if (this.entities.containsKey(name)) 
+			count = this.entities.get(name);
+		this.entities.put(name, count + 1);
 	}
 
 	public void printStats(Hashtable<String, Integer> table) {
@@ -58,8 +58,8 @@ public class LanguageStats {
 	public void printThemeStats() {
 		printStats(this.themes);
 	}
-	public void printTopicsStats() {
-		printStats(this.topics);
+	public void printEntityStats() {
+		printStats(this.entities);
 	}
 	
 }

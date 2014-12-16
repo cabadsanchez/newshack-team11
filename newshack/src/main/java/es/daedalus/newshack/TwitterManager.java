@@ -125,7 +125,7 @@ public class TwitterManager
 				
 				List<Entity> entities = annotations.getEntities();
 				for (Entity entity : entities) {
-					stats.addTopics(entity.getForm());;
+					stats.addEntity(entity.getForm());;
 				}
 				
 			}
@@ -193,7 +193,7 @@ public class TwitterManager
     	System.out.println("-----------");
     	stats.printThemeStats();
     	System.out.println("-----------");    	
-    	stats.printTopicsStats();
+    	stats.printEntityStats();
     	System.out.println("-----------");
     	
     			
