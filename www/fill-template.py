@@ -41,12 +41,12 @@ def fillTemplate(templatePath, articlePath, dataPath, outputPath):
 				"groups": [str(gr) for gr in reportData['languages']['groups']],
 			},
 			"themes": {
-				"columns": [[str(col[0]), col[1]] for col in  reportData['themes']['columns']],
-				"groups": [str(gr) for gr in reportData['themes']['groups']],
+				"groups": [str(gr.encode('utf-8')) for gr in reportData['themes']['groups']],
+				"columns": [[str(col[0].encode('utf-8')), col[1]] for col in  reportData['themes']['columns'] if col[1] > 10],
 			},
 			"entities": {
-				"columns": [[str(col[0]), col[1]] for col in  reportData['entities']['columns'] if col[1] > 2],
-				"groups": [str(gr) for gr in reportData['entities']['groups']],
+				"columns": [[str(col[0].encode('utf-8')), col[1]] for col in  reportData['entities']['columns'] if col[1] > 10],
+				"groups": [str(gr.encode('utf-8')) for gr in reportData['entities']['groups']],
 			},
 		},
 	}
@@ -58,8 +58,6 @@ def fillTemplate(templatePath, articlePath, dataPath, outputPath):
 	with open(outputPath, 'wb') as of:
 		of.write(outputText)
 		print "Written output to {}".format(outputPath)
-
-
 
 def main():
 	parser = argparse.ArgumentParser(description='fill HTML template with data from JSON')

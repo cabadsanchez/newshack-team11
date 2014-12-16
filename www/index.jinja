@@ -22,8 +22,12 @@
     <link href="assets-newshack/css/c3.css" rel="stylesheet" type="text/css">
 
     <!-- Load d3.js and c3.js -->
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <!-- <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
+    
+    <script src="assets-newshack/js/d3.js" ></script>
     <script src="assets-newshack/js/c3.js" ></script>
+    <script src="assets-newshack/js/d3.layout.cloud.js" ></script>
+    <script src="assets-newshack/js/wordcloud.js" ></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -108,7 +112,7 @@
                           <div class="content-panel">
                 <h4><i class="fa fa-angle-right"></i> Article</h4>
                               <div class="panel-body ">
-                                  <p class="introduction" id="story_continues_1">A gunman is holding staff and customers hostage at a cafe in Sydney, Australia.</p>
+                                  <p class="introduction" id="story_continues_1">A gunman is holding staff and customers hostage at a cafe in <span class="entity" data-entity="sydney">Sydney</span>, Australia.</p>
         <p>The Lindt cafe in the city centre is surrounded by armed police. Officers have made contact with the gunman. </p>
         <p>Five people have been seen running from the building. It is not clear how many remain inside. A black Islamic flag has been displayed at the window.</p>
         <p>Prime Minister Tony Abbott said it was &quot;profoundly shocking&quot; that people were being &quot;held hostage by an armed person claiming political motivation&quot;. </p>
@@ -119,7 +123,7 @@
 
         <p>The incident began as people were arriving for work in Martin Place on Monday. Witnesses saw a man with a bag and gun walk into the Lindt chocolate shop and cafe.</p>
         <p>Lindt said about 10 employees and 30 customers were thought to be inside at the time. Nearby offices were evacuated and police asked people to remain indoors and away from open windows. </p>
-        <p>The BBC&#039;s Jon Donnison in Sydney says an enormous police operation is in place, on a scale few Sydney residents will have seen. </p>
+        <p>The BBC&#039;s Jon Donnison in <span class="entity" data-entity="sydney">Sydney</span> says an enormous police operation is in place, on a scale few <span class="entity" data-entity="sydney">Sydney</span> residents will have seen. </p>
   <div class="caption full-width">
     <!-- width="624" height="351" -->
   <img src="http://news.bbcimg.co.uk/media/images/79729000/jpg/_79729207_025124051-1.jpg" width="100%" alt="A former hostage wearing a Lindt uniform runs towards police from a cafe in central Sydney where a gunman is holding people captive" />
@@ -143,12 +147,12 @@
   <img src="http://news.bbcimg.co.uk/media/images/75306000/jpg/_75306515_line976.jpg" width="464" height="2" alt="line" />
 
   </div>
-<span class="cross-head">At the scene: Wendy Frew, BBC News, Sydney</span>
+<span class="cross-head">At the scene: Wendy Frew, BBC News, <span class="entity" data-entity="sydney">Sydney</span></span>
         <p>The atmosphere in Martin Place itself was surreal. Office workers who had been evacuated from their buildings, construction workers from building sites and tourists packed the pedestrian plaza one block away from the Lindt coffee shop.</p>
         <p>Rosemary D&#039;Urso Healion had just come out of the Martin Place subway station and was walking to her office when she saw that it was blocked by police. Then she saw the police close down the subway station.</p>
         <p>&quot;I work in that building [where the siege is taking place] and I was just about to go in,&quot; she told the BBC, adding that she had been in contact with some of her colleagues who were in the building but not being held hostage.</p>
         <p>She remained at Martin Place anxiously watching a police operation that appeared to be aimed at getting some of her colleagues out via a ladder erected on a window ledge on the first floor.</p>
-        <p><a href="http://www.bbc.co.uk/news/world-asia-30474690" >Uneasy crowds in Sydney</a></p>
+        <p><a href="http://www.bbc.co.uk/news/world-asia-30474690" >Uneasy crowds in <span class="entity" data-entity="sydney">Sydney</span></a></p>
         <p><a href="http://www.bbc.co.uk/news/world-australia-30474494" >Eyewitnesses speak to the BBC</a></p>
   <div class="caption body-width">
   <img src="http://news.bbcimg.co.uk/media/images/75306000/jpg/_75306515_line976.jpg" width="464" height="2" alt="line" />
@@ -209,10 +213,19 @@
 
                           <br>
 
-                          <div class="content-panel">
+                          <div class="content-panel" id="entitypanel">
                             <h4><i class="fa fa-angle-right"></i> Entities</h4>
                               <div class="panel-body text-center">
                                   <div id="chart-entities"></div>
+                              </div>
+                          </div>
+                          
+                          <br>
+
+                          <div class="content-panel">
+                            <h4><i class="fa fa-angle-right"></i> Word Cloud</h4>
+                              <div class="panel-body text-center">
+                                  <div id="word-cloud"></div>
                               </div>
                           </div>
 
@@ -286,7 +299,7 @@
             }
         },
         size: {
-          height: 100
+          height: 200
         },
         data: {
           columns: {{analysis.themes.columns}},
@@ -309,7 +322,7 @@
             }
         },
         size: {
-          height: 100
+          height: 200
         },
         data: {
           columns: {{analysis.entities.columns}},
@@ -320,6 +333,33 @@
         }
       });
 
+    </script>
+
+    <!-- worldcloud -->
+    <script type="text/javascript">
+      entities = [
+        {
+          "text": "BBCBreaking",
+          "size": 120
+        },
+        {
+          "text": "Sydney",
+          "size": 103
+        }
+        ];
+
+      // [['@BBCBreaking', 120], ['Sydney', 103], ['#sydneysiege', 68], ['military police', 58], ['#sydneyseige', 53], ['National Security Committee', 51], ['#SydneySiege', 34], ['United States', 25], ['Russia', 22], ['#illridewithyou', 22], ['#Sydney', 21], ['#PeshawarAttack', 19], ['Pakistan', 18], ['#Peshawar', 15], ['Commonwealth of Australia', 15], ['@RT_com', 14], ['@cnnbrk', 13], ['Peshawar', 13], ['Santa', 12], ['Ferguson', 12]];
+
+      var wc = wordCloud('#word-cloud', entities, 300);
+    </script>
+
+    <script type="text/javascript">
+      $("#entitypanel").hover(function(){
+        $(".entity").css("color", "orange");
+      })
+      $("#entitypanel").mouseleave(function(){
+        $(".entity").css("color", "");
+      })
     </script>
 
   </body>
