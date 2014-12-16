@@ -84,7 +84,7 @@
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-clock-o"></i>
-                          <span>More Stats</span>
+                          <span>Entities</span>
                       </a>
                   </li>
               </ul>
@@ -212,7 +212,7 @@
                           <div class="content-panel">
                             <h4><i class="fa fa-angle-right"></i> More stats ...</h4>
                               <div class="panel-body text-center">
-                                  <div id="chart-more"></div>
+                                  <div id="chart-entities"></div>
                               </div>
                           </div>
 
@@ -268,13 +268,15 @@
         },
         data: {
           columns: [
-          ['English', 104],
-          ['Spanish', 56],
-          ['French', 23]
+          ['English', 5],
+          ['Swedish', 2],
+          ['French', 1],
+          ['Korean', 1],
+          ['Portuguese', 1]
           ],
           type: 'bar',
           groups: [
-          ['English', 'Spanish', 'French']
+            ['English','Swedish','French','Korean','Portuguese']
           ]
         }
       });
@@ -295,13 +297,55 @@
         },
         data: {
           columns: [
-          ['Economy', 168],
-          ['Sports', 45],
-          ['Politics', 13]
+          ['Arts, Culture, Entertainment', 8],
+          ['Social Issues', 6],
+          ['Crime, Law & Justice', 4],
+          ['Religion & belief', 3],
+          ['Economy, Business & Finance', 2],
+          ['Human Interest', 1],
+          ['Lifestyle & Leisure', 1]
           ],
           type: 'bar',
           groups: [
-          ['Economy', 'Sports', 'Politics']
+            ['Arts, Culture, Entertainment','Social Issues','Crime, Law & Justice','Religion & belief','Economy, Business & Finance','Human Interest','Lifestyle & Leisure']
+          ]
+        }
+      });
+      
+      var chartEntities = c3.generate({
+        bindto: '#chart-entities',
+        axis: {
+            rotated: true,
+            x: {
+              show: false
+            },
+            y: {
+              show: false
+            }
+        },
+        size: {
+          height: 100
+        },
+        data: {
+          columns: [
+          ['@BBCBreaking', 48],
+          ['#SydneySiege', 45],
+          ['Sydney', 22],
+          ['Isis', 12],
+          ['military police', 11],
+          ['Commonwealth of Australia', 11],
+          ['National Security Committee', 8],
+          ['#martinplace', 5],
+          ['#BelgiumSiege', 3],
+          ['#sydneyseige', 11],
+          ['Man Haron Monis', 4],
+          ['#Kobane', 4],
+          ['#Ghent', 4],
+          ['Other', 50]
+          ],
+          type: 'bar',
+          groups: [
+            ['@BBCBreaking','#SydneySiege','Sydney','Isis','military police','Commonwealth of Australia','National Security Committee','#martinplace','#BelgiumSiege','#sydneyseige','Man Haron Monis','#Kobane','#Ghent','Other']
           ]
         }
       });
